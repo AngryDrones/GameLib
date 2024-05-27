@@ -17,7 +17,7 @@ public partial class Review
 
     public DateTime Date { get; set; }
 
-    public virtual Game Game { get; set; } = null!;
+    public virtual Game? Game { get; set; } = null!;
 
-    public virtual User User { get; set; } = null!;
+    public virtual User? User { get; set; } = null!;
 }

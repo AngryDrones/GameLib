@@ -81,9 +81,7 @@ public partial class GameLibContext : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.Property(e => e.ReviewId)
-                .ValueGeneratedNever()
-                .HasColumnName("ReviewID");
+            entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
             entity.Property(e => e.Caption).HasMaxLength(50);
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.GameId).HasColumnName("GameID");

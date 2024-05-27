@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using 
-    .Models;
+using GameLib.Models;
 
-namespace GameLib;
+namespace GameLib.Models;
 
 public partial class Game
 {
