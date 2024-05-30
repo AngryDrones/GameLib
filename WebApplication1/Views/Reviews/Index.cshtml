@@ -4,56 +4,57 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Список відгуків</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Додати відгук</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Rating)
+                Оцінка
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Caption)
+                Підпис
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Дата
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Game)
+                Гра
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                Користувач
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Caption)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Game.GameId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReviewId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReviewId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReviewId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Caption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Fullname)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReviewId">Редагувати</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReviewId">Деталі</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReviewId">Видалити</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

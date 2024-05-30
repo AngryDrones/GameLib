@@ -139,14 +139,27 @@ namespace GameLib.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            if (user == null)
             {
-                _context.Users.Remove(user);
+                return NotFound();
             }
 
+            var userGames = _context.Games.Where(g => g.UserId == id);
+            _context.Games.RemoveRange(userGames);
+
+            var userReviews = _context.Reviews.Where(r => r.UserId == id);
+            _context.Reviews.RemoveRange(userReviews);
+
+            var userGameLoans = _context.GameLoans.Where(gl => gl.UserId == id);
+            _context.GameLoans.RemoveRange(userGameLoans);
+
+            _context.Users.Remove(user);
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool UserExists(int id)
         {

@@ -110,6 +110,14 @@ namespace GameLib.Controllers
                 return NotFound();
             }
 
+            User user = _context.Users.FirstOrDefault(c => c.UserId == game.UserId);
+            game.User = user;
+            Genre genre = _context.Genres.FirstOrDefault(c => c.GenreId == game.GenreId);
+            game.Genre = genre;
+
+            ModelState.Clear();
+            TryValidateModel(game);
+
             if (ModelState.IsValid)
             {
                 try

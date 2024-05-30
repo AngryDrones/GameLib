@@ -4,24 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Користувачі</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Додати нового користувача</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Fullname)
+                Ім'я
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Пошта
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                Пароль
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -37,9 +36,9 @@
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.UserId">Редагувати</a> |
+                <a asp-action="Details" asp-route-id="@item.UserId">Деталі</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserId">Видалити</a>
             </td>
         </tr>
 }

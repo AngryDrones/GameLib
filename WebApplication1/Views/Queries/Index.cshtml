@@ -1,0 +1,123 @@
+﻿@model GameLib.Models.SqlQueryViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Execute SQL Queries</h2>
+            <div class="query-list">
+
+                <h4>1. Знайти назви та жанри ігор, які:</h4>
+                <form asp-controller="Queries" asp-action="ExecuteQuery" method="post">
+                    <input type="hidden" name="SelectedQuery" value="Q1.sql" />
+                    <select asp-for="IsAvailable" class="form-control">
+                        <option value="0">не доступні</option>
+                        <option value="1">доступні</option>
+                    </select>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>2. Знайти прізвища та електронні пошти користувачів, які залишили відгук з рейтингом:</h4>
+                <form asp-controller="Queries" asp-action="ExecuteQuery" method="post">
+                    <input type="hidden" name="SelectedQuery" value="Q2.sql" />
+                    <label>Рейтинг:</label>
+                    <select asp-for="Rating" class="form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>3. Знайти назви ігор, які позичили користувачі з електронною поштою, що закінчується на:</h4>
+                <form asp-controller="Queries" asp-action="ExecuteQuery" method="post">
+                    <input type="hidden" name="SelectedQuery" value="Q3.sql" />
+                    <label>Електронна пошта:</label>
+                    <input type="text" name="Email" class="form-control" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>4. Знайти назви ігор та дати, коли вони були взяті користувачем з ім'ям:</h4>
+                <form asp-controller="Queries" asp-action="Query_4" method="post">
+                    <input type="hidden" name="SelectedQuery" />
+                    <input type="text" name="fullname" class="form-control" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>5. Знайти назви жанрів та кількість ігор у кожному жанрі.</h4>
+                <form asp-controller="Queries" asp-action="ExecuteQuery" method="post">
+                    <input type="hidden" name="SelectedQuery" value="Q5.sql" />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>6. Знайти імена тих користувачів, які брали ті і тільки ті ігри, що й користувач Степан.</h4>
+                <form asp-controller="Queries" asp-action="Query_6" method="post">
+                    <input type="hidden" name="SelectedQuery" />
+                    <input type="text" name="fullname" class="form-control" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>7. знайти користувачів, які брали всі ті ігри (можливо ще якісь), що й користувач:</h4>
+                <form asp-controller="Queries" asp-action="Query_7" method="post">
+                    <input type="hidden" name="SelectedQuery" />
+                    <input type="text" name="fullname" class="form-control" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+                <h4>8. Знайти імена тих користувачів, які брали хоча б одну таку гру, що й користувач:</h4>
+                <form asp-controller="Queries" asp-action="Query_8" method="post">
+                    <input type="hidden" name="SelectedQuery" />
+                    <input type="text" name="fullname" class="form-control" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Виконати</button>
+                </form>
+                <br />
+
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            @if (Model.ColumnNames != null && Model.Rows != null)
+            {
+                <h4>Result:</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                @foreach (var columnName in Model.ColumnNames)
+                                {
+                                    <th>@columnName</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in Model.Rows)
+                            {
+                                <tr>
+                                    @foreach (var cell in row)
+                                    {
+                                        <td>@cell</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

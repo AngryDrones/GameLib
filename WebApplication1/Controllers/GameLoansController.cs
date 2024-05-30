@@ -61,23 +61,68 @@ namespace GameLib.Controllers
         public async Task<IActionResult> Create([Bind("LoanId,UserId,GameId,Date")] GameLoan gameLoan)
         {
             User user = _context.Users.FirstOrDefault(c => c.UserId == gameLoan.UserId);
-            gameLoan.User = user;
-            Game game = _context.Games.FirstOrDefault(c => c.GameId == gameLoan.GameId);
-            gameLoan.Game = game;
+            Game game = _context.Games.Include(g => g.User).Include(g => g.Genre).FirstOrDefault(c => c.GameId == gameLoan.GameId);
 
-            ModelState.Clear();
-            TryValidateModel(gameLoan);
-
-            if (ModelState.IsValid)
+            if (user != null && game != null)
             {
-                _context.Add(gameLoan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                gameLoan.User = user;
+                gameLoan.Game = game;
+
+                ModelState.Clear();
+                TryValidateModel(gameLoan);
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(gameLoan);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            else
+            {
+                Console.WriteLine("User or Game not found.");
+            }
+
             ViewData["GameId"] = new SelectList(_context.Games, "GameId", "GameId", gameLoan.GameId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", gameLoan.UserId);
             return View(gameLoan);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("LoanId,UserId,GameId,Date")] GameLoan gameLoan)
+        //{
+        //    User user = _context.Users.FirstOrDefault(c => c.UserId == gameLoan.UserId);
+        //    gameLoan.User = user;
+        //    Game game = _context.Games.FirstOrDefault(c => c.GameId == gameLoan.GameId);
+        //    gameLoan.Game = game;
+
+        //    ModelState.Clear();
+        //    TryValidateModel(gameLoan);
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(gameLoan);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        foreach (var key in ModelState.Keys)
+        //        {
+        //            var state = ModelState[key];
+        //            foreach (var error in state.Errors)
+        //            {
+        //                Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+        //            }
+        //        }
+        //    }
+
+
+        //    ViewData["GameId"] = new SelectList(_context.Games, "GameId", "GameId", gameLoan.GameId);
+        //    ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", gameLoan.UserId);
+        //    return View(gameLoan);
+        //}
 
         // GET: GameLoans/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -109,8 +154,19 @@ namespace GameLib.Controllers
                 return NotFound();
             }
 
+            User user = _context.Users.FirstOrDefault(c => c.UserId == gameLoan.UserId);
+            Game game = _context.Games.Include(g => g.User).Include(g => g.Genre).FirstOrDefault(c => c.GameId == gameLoan.GameId);
+            gameLoan.User = user;
+            gameLoan.Game = game;
+
+            ModelState.Clear();
+            TryValidateModel(gameLoan);
+
             if (ModelState.IsValid)
             {
+                ModelState.Clear();
+                TryValidateModel(gameLoan);
+
                 try
                 {
                     _context.Update(gameLoan);
